@@ -28,6 +28,9 @@ const char *productions[] = {
     "b"       /* 12 : P  -> b */
 };
 
+/* SUIVANT de chaque non-terminal, dans l'ordre R, R', T, T', F, F', P (mode panique) */
+const char *suivant[] = { ")$", ")$", "+)$", "+)$", "(ab+)$", "(ab+)$", "*(ab+)$" };
+
 /* Table M : lignes R, R', T, T', F, F', P
               colonnes a, b, (, ), +, *, $ */
 const int table[7][7] = {
@@ -40,8 +43,9 @@ const int table[7][7] = {
     {11, 12, 10,  0,  0,  0,  0 }  /* P  */
 };
 
-int analyser(const char mot[])
+int analyser(const char mot[])   /* retourne le nombre d'erreurs */
 {
+    int erreurs = 0;
     char entree[MAX_MOT + 2];
     char pile[MAX_PILE];
     int position = 0;
@@ -66,12 +70,18 @@ int analyser(const char mot[])
             int numeroProduction;
             const char *partieDroite;
 
-            if (caseTable == NULL)
-                return 0;
-
-            numeroProduction = table[ligne][(int)(caseTable - terminaux)];
-            if (numeroProduction == 0)
-                return 0; /* case vide : erreur syntaxique */
+            numeroProduction = (caseTable == NULL) ? 0
+                             : table[ligne][(int)(caseTable - terminaux)];
+            if (numeroProduction == 0) {
+                /* MODE PANIQUE : on saute les lettres jusqu'a un terminal de SUIVANT(X)
+                   (il contient toujours $, donc la boucle s'arrete), puis on abandonne X. */
+                erreurs++;
+                printf("Erreur : %c inattendu (position %d)\n", a, position + 1);
+                while (strchr(suivant[ligne], entree[position]) == NULL)
+                    position++;
+                sommet--;
+                continue;
+            }
 
             /* Emission de la production utilisee (comme dans le cours). */
             printf("Production %d\n", numeroProduction);
@@ -83,13 +93,17 @@ int analyser(const char mot[])
                Si elle vaut epsilon, la boucle ne pousse aucun symbole. */
             for (int i = (int)strlen(partieDroite) - 1; i >= 0; i--) {
                 if (sommet >= MAX_PILE)
-                    return 0;
+                    return erreurs + 1;
                 pile[sommet++] = partieDroite[i];
             }
         }
         /* Cas 2 : X = $. Le mot est accepte seulement si l'entree est aussi finie. */
         else if (X == '$') {
-            return a == '$';
+            if (a != '$') {                     /* il reste des lettres apres la fin du mot */
+                erreurs++;
+                printf("Erreur : %c en trop (position %d)\n", a, position + 1);
+            }
+            return erreurs;
         }
         /* Cas 3 : X est un terminal identique au caractere lu :
            on le retire de la pile et on avance dans l'entree. */
@@ -99,7 +113,9 @@ int analyser(const char mot[])
         }
         /* Sinon : terminal attendu different du caractere lu. */
         else {
-            return 0;
+            erreurs++;                          /* terminal attendu absent : on le retire */
+            printf("Erreur : %c attendu a la position %d\n", X, position + 1);
+            sommet--;
         }
     }
 }
@@ -141,10 +157,11 @@ int main(void)
         return 0;
     }
 
-    if (analyser(mot))
+    int erreurs = analyser(mot);
+    if (erreurs == 0)
         printf("Mot accepte.\n");
     else
-        printf("Mot refuse.\n");
+        printf("Mot refuse (%d erreur(s)).\n", erreurs);
 
     return 0;
 }
