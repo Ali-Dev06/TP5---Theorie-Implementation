@@ -1,0 +1,312 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 3 /Kids [6 0 R 8 0 R 10 0 R] >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Length 4391 >>
+stream
+0.11 0.20 0.38 rg
+BT /F1 21 Tf 48 790 Td (Pr\351sentation de l'analyseur syntaxique LL\(1\)) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 758 Td (TP5 \227 Compilation et th\351orie des langages Objectif : expliquer au professeur le passage) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 745 Td (de la grammaire du rapport \340 l'analyseur \351crit en C.) Tj ET
+0.11 0.20 0.38 rg
+BT /F1 13 Tf 48 717 Td (1. Quel est le r\364le de chaque document ?) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 692 Td (Le rapport est la r\351f\351rence th\351orique : il d\351finit la grammaire, enl\350ve son ambigu\357t\351,) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 679 Td (calcule les ensembles PREMIER et SUIVANT, puis construit la table LL\(1\). Le cours) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 666 Td (fournit l'algorithme d'analyse avec une pile. Le fichier ll.c est notre r\351alisation en C) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 653 Td (de cet algorithme.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 632 Td (\300 dire \340 l'oral : \253 Je v\351rifie que mon programme applique exactement la grammaire et la) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 619 Td (table construites dans le rapport. Le langage et la m\351thode viennent du rapport ; le C) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 606 Td (est mon choix d'impl\351mentation. \273) Tj ET
+0.11 0.20 0.38 rg
+BT /F1 13 Tf 48 578 Td (2. Point de d\351part : la grammaire G) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 548 Td (R -> RR | R+R | R* | \(R\) | a | b) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 527 Td (Cette grammaire d\351crit des expressions r\351guli\350res. + repr\351sente l'union, la) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 514 Td (juxtaposition repr\351sente la concat\351nation et * est une \351toile postfix\351e. Elle est) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 501 Td (ambigu\353 : a+ba peut se lire a+\(ba\) ou \(a+b\)a. Le rapport choisit les priorit\351s * >) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 488 Td (concat\351nation > +.) Tj ET
+0.11 0.20 0.38 rg
+BT /F1 13 Tf 48 460 Td (3. Grammaire G' : enlever l'ambigu\357t\351) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 430 Td (R -> R+T | T          union) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 419 Td (T -> TF | F           concat\351nation) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 408 Td (F -> F* | P           \351toile) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 397 Td (P -> \(R\) | a | b      atomes) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 376 Td (Chaque niveau poss\350de un non-terminal. Cette grammaire fixe la priorit\351, mais les r\350gles) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 363 Td (R -> R+T, T -> TF et F -> F* sont r\351cursives \340 gauche. Un analyseur LL\(1\) ne peut pas) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 350 Td (les employer directement.) Tj ET
+0.11 0.20 0.38 rg
+BT /F1 13 Tf 48 322 Td (4. Grammaire G'' : enlever la r\351cursivit\351 \340 gauche) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 297 Td (La transformation du cours est A -> A alpha | beta qui devient A -> beta A' et A' ->) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 284 Td (alpha A' | epsilon.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 258 Td (R  -> T R'          R' -> + T R' | epsilon) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 247 Td (T  -> F T'          T' -> F T'   | epsilon) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 236 Td (F  -> P F'          F' -> * F'   | epsilon) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 225 Td (P  -> \( R \) | a | b) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 204 Td (Il n'y a pas de pr\351fixe commun \340 factoriser. Dans le code, Q repr\351sente R', U repr\351sente) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 191 Td (T' et H repr\351sente F' : chaque symbole tient ainsi dans un char.) Tj ET
+0.11 0.20 0.38 rg
+BT /F1 13 Tf 48 163 Td (5. PREMIER, SUIVANT et choix LL\(1\)) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 138 Td (PREMIER\(X\) contient les terminaux qui peuvent commencer un mot d\351riv\351 de X. SUIVANT\(X\)) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 125 Td (contient ceux qui peuvent appara\356tre imm\351diatement apr\350s X.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 99 Td (Symbole     PREMIER                 SUIVANT) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 88 Td (R           { a, b, \( }             { \), $ }) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 77 Td (R'          { +, epsilon }          { \), $ }) Tj ET
+0.40 0.45 0.52 rg
+BT /F2 8 Tf 48 33 Td (TP5 - Analyseur LL\(1\) | 1/3) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 4964 >>
+stream
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 790 Td (T           { a, b, \( }             { +, \), $ }) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 779 Td (T'          { a, b, \(, epsilon }    { +, \), $ }) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 768 Td (F           { a, b, \( }             { a, b, \(, +, \), $ }) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 757 Td (F'          { *, epsilon }          { a, b, \(, +, \), $ }) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 746 Td (P           { a, b, \( }             { *, a, b, \(, +, \), $ }) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 725 Td (Pour une production A -> u, on remplit M[A,t] pour chaque t de PREMIER\(u\). Si u peut) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 712 Td (devenir vide, on utilise aussi SUIVANT\(A\). Par exemple, R' -> epsilon est choisi avec \)) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 699 Td (ou $. Il n'y a aucun conflit dans la table : G'' est LL\(1\).) Tj ET
+0.11 0.20 0.38 rg
+BT /F1 13 Tf 48 671 Td (6. Table utilis\351e par le programme) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 646 Td (Chaque nombre est l'indice d'une production dans le tableau productions de ll.c. Une) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 633 Td (case 0 signifie une erreur syntaxique.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 607 Td (             a   b   \(   \)   +   *   $) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 596 Td (R            1   1   1   0   0   0   0) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 585 Td (R'           0   0   0   3   2   0   3) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 574 Td (T            4   4   4   0   0   0   0) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 563 Td (T'           5   5   5   6   6   0   6) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 552 Td (F            7   7   7   0   0   0   0) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 541 Td (F'           9   9   9   9   9   8   9) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 530 Td (P           11  12  10   0   0   0   0) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 509 Td (Les productions sont num\351rot\351es dans l'ordre suivant : 1 R->TR', 2 R'->+TR', 3) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 496 Td (R'->epsilon, 4 T->FT', 5 T'->FT', 6 T'->epsilon, 7 F->PF', 8 F'->*F', 9 F'->epsilon, 10) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 483 Td (P->\(R\), 11 P->a, 12 P->b.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 462 Td (\300 dire \340 l'oral : \253 La ligne d\351pend du non-terminal au sommet de la pile ; la colonne) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 449 Td (d\351pend du prochain caract\350re de l'entr\351e. Une seule case donne la production \340) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 436 Td (appliquer. \273) Tj ET
+0.11 0.20 0.38 rg
+BT /F1 13 Tf 48 408 Td (7. Correspondance avec ll.c) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 383 Td (1. nonTerminaux = "RQTUFHP" fixe l'ordre des lignes. terminaux = "ab\(\)+*$" fixe l'ordre) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 370 Td (des colonnes.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 354 Td (2. productions[] stocke la partie droite de chaque r\350gle. Une cha\356ne vide code epsilon.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 338 Td (3. table[7][7] contient les num\351ros de r\350gles du tableau ci-dessus.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 322 Td (4. entree contient le mot suivi de $. La pile contient d'abord $, puis l'axiome R.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 306 Td (5. position indique le caract\350re lu ; sommet indique le prochain emplacement libre de la) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 293 Td (pile. Le sommet r\351el est pile[sommet-1].) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 277 Td (6. strchr cherche la ligne et la colonne. Une colonne absente ou une case 0 provoque le) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 264 Td (refus.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 248 Td (7. Apr\350s avoir choisi une r\350gle, la boucle empile sa partie droite de droite \340 gauche :) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 235 Td (son premier symbole sera trait\351 en premier. Pour epsilon, la cha\356ne est vide et rien) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 222 Td (n'est empil\351.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 206 Td (8. Si le sommet est un terminal \351gal au caract\350re lu, le programme d\351pile et avance dans) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 193 Td (l'entr\351e.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 177 Td (9. Quand le sommet et le caract\350re lu sont tous deux $, il accepte. Sinon, il refuse.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 161 Td (10. main lit une ligne, refuse une entr\351e vide ou trop longue, interdit $ dans le mot et) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 148 Td (affiche le r\351sultat.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 127 Td (Le programme affiche Production n lorsqu'il applique une r\350gle. Il ne montre) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 114 Td (actuellement ni la pile compl\350te \340 chaque \351tape ni une mesure de temps.) Tj ET
+0.40 0.45 0.52 rg
+BT /F2 8 Tf 48 33 Td (TP5 - Analyseur LL\(1\) | 2/3) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 4170 >>
+stream
+0.11 0.20 0.38 rg
+BT /F1 13 Tf 48 783 Td (8. Exemple complet : a+ba) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 758 Td (L'entr\351e devient a+ba$. Dans le tableau ci-dessous, le sommet de la pile se trouve \340) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 745 Td (droite.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 719 Td (Pile       Entr\351e   Action) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 708 Td ($R         a+ba$    r\350gle 1 : R -> TQ) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 697 Td ($QT        a+ba$    r\350gle 4 : T -> FU) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 686 Td ($QUF       a+ba$    r\350gle 7 : F -> PH) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 675 Td ($QUHP      a+ba$    r\350gle 11 : P -> a) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 664 Td ($QUHa      a+ba$    lire a) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 653 Td ($QUH        +ba$    r\350gle 9 : H -> epsilon) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 642 Td ($QU         +ba$    r\350gle 6 : U -> epsilon) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 631 Td ($Q          +ba$    r\350gle 2 : Q -> +TQ) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 620 Td ($QT+        +ba$    lire +) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 609 Td ($QT          ba$    r\350gle 4 : T -> FU) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 598 Td ($QUF         ba$    r\350gle 7 : F -> PH) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 587 Td ($QUHP        ba$    r\350gle 12 : P -> b) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 576 Td ($QUHb        ba$    lire b) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 565 Td ($QUH          a$    r\350gle 9 : H -> epsilon) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 554 Td ($QU           a$    r\350gle 5 : U -> FU) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 543 Td ($QUF          a$    r\350gle 7 : F -> PH) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 532 Td ($QUHP         a$    r\350gle 11 : P -> a) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 521 Td ($QUHa         a$    lire a) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 510 Td ($QUH           $    r\350gle 9 : H -> epsilon) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 499 Td ($QU            $    r\350gle 6 : U -> epsilon) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 488 Td ($Q             $    r\350gle 3 : Q -> epsilon) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 8.4 Tf 48 477 Td ($              $    accepter) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 456 Td (La s\351quence montre que + s\351pare deux termes et que ba est reconnu par concat\351nation. Le) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 443 Td (mot a+ba est donc accept\351 avec le sens a+\(ba\) fix\351 par G'.) Tj ET
+0.11 0.20 0.38 rg
+BT /F1 13 Tf 48 415 Td (9. Verdict et limites de la version C) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 390 Td (La grammaire, la table et l'algorithme LL\(1\) du code correspondent \340 l'\351tude th\351orique) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 377 Td (du rapport et au cours. Les exemples du rapport sont reconnus comme attendu : a+ba,) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 364 Td (\(a+b\)*ab, ab sont accept\351s ; a+ et \)\( sont refus\351s.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 343 Td (Le rapport d\351crit aussi un programme C++ avec trace compl\350te optionnelle et mesure du) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 330 Td (temps sur 100 000 analyses. La version C actuelle n'impl\351mente pas ces deux fonctions.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 317 Td (Pour expliquer le coeur du TP LL\(1\), elle est correcte ; pour reproduire toutes les) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 304 Td (fonctions de la page 4 du rapport, il faudrait ajouter ces fonctions.) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 283 Td (Phrase de conclusion \340 l'oral : \253 J'ai conserv\351 la grammaire G'' et la table \351tablies) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 270 Td (dans le rapport. Mon programme C applique l'algorithme du cours : il choisit une r\350gle) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 257 Td (avec un caract\350re d'anticipation, utilise une pile et accepte seulement lorsque la pile) Tj ET
+0.12 0.15 0.20 rg
+BT /F2 9 Tf 48 244 Td (et l'entr\351e atteignent $ ensemble. \273) Tj ET
+0.40 0.45 0.52 rg
+BT /F2 8 Tf 48 33 Td (TP5 - Analyseur LL\(1\) | 3/3) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+xref
+0 11
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000134 00000 n 
+0000000236 00000 n 
+0000000331 00000 n 
+0000004774 00000 n 
+0000004910 00000 n 
+0000009926 00000 n 
+0000010062 00000 n 
+0000014284 00000 n 
+trailer
+<< /Size 11 /Root 1 0 R >>
+startxref
+14421
+%%EOF
